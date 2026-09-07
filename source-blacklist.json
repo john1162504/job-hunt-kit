@@ -1,0 +1,43 @@
+{
+  "description": "Job boards and mirrors the daily scanner must never use for apply URLs. Prefer the employer's own careers page, SEEK job detail pages, Trade Me Jobs, GradConnection, or LinkedIn job view pages.",
+  "domains": [
+    "bebee.com",
+    "www.bebee.com",
+    "nz.bebee.com",
+    "theirstack.com",
+    "www.theirstack.com",
+    "jora.com",
+    "nz.jora.com",
+    "www.jora.com",
+    "adzuna.co.nz",
+    "www.adzuna.co.nz",
+    "adzuna.com",
+    "glassdoor.com",
+    "www.glassdoor.com",
+    "glassdoor.co.nz",
+    "careerjet.co.nz",
+    "www.careerjet.co.nz",
+    "jobrapido.com",
+    "www.jobrapido.com",
+    "talent.com",
+    "www.talent.com",
+    "simplyhired.com",
+    "www.simplyhired.com",
+    "ziprecruiter.com",
+    "www.ziprecruiter.com",
+    "builtin.com",
+    "www.builtin.com"
+  ],
+  "path_deny_substrings": [
+    "/adapt-my-cv",
+    "/unlock",
+    "/premium",
+    "/subscribe-to-apply"
+  ],
+  "notes": [
+    "Aggregator / scraper mirrors are often stale, paywalled, or not the real listing.",
+    "Glassdoor frequently requires login / paywall to see or apply.",
+    "Prefer seek.co.nz/job/<id> detail pages, not category or keyword search result URLs.",
+    "SEEK detail pages often return Cloudflare bot challenges to scripts/verify_listing_url.py (exit 3 / bot_blocked). Never treat that as a hard reject or skipped-bad-url — browser-confirm the same detail URL, then prepare if live."
+  ]
+}

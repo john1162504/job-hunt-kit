@@ -1,0 +1,67 @@
+{
+  "applicant": {
+    "full_name": "Alex Example",
+    "file_prefix": "AlexExample",
+    "phone": "021 000 0000",
+    "email": "alex@example.com",
+    "links": [
+      "github.com/alex",
+      "alex.example.com"
+    ],
+    "location_city": "Auckland",
+    "location_country": "New Zealand",
+    "spelling": "en-NZ",
+    "work_auth_note": "Eligible to work in New Zealand; update this sentence for your situation."
+  },
+  "search": {
+    "market_label": "New Zealand software roles",
+    "freshness_hours": 48,
+    "max_prepared_per_run": 5,
+    "primary": {
+      "titles": [
+        "junior software engineer",
+        "graduate software developer",
+        "graduate developer",
+        "entry-level software engineer",
+        "grad programme software"
+      ],
+      "locations": [
+        "Auckland",
+        "Wellington",
+        "Christchurch",
+        "Dunedin",
+        "Hamilton",
+        "remote New Zealand",
+        "hybrid New Zealand"
+      ]
+    },
+    "adjacent": {
+      "enabled": true,
+      "titles": [
+        "IT support",
+        "technical support",
+        "technology coordinator",
+        "operations coordinator"
+      ],
+      "locations_required": ["Christchurch"],
+      "notes": "Only keep adjacent (non-dev) roles when the listing location matches locations_required."
+    },
+    "preferred_sources": [
+      "company career pages",
+      "SEEK job detail pages",
+      "Trade Me Jobs listings",
+      "GradConnection",
+      "LinkedIn Jobs view pages",
+      "Indeed NZ job view pages"
+    ]
+  },
+  "schedule": {
+    "display_timezone": "NZST (UTC+12)",
+    "cron_utc_slots": ["03:30", "04:00", "04:30", "05:00", "05:30"],
+    "local_display_slots": ["3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM", "5:30 PM"],
+    "local_sync_window": "15:45-18:45"
+  },
+  "launch_agent": {
+    "label": "com.alexexample.job-hunt.sync-cloud-results"
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "source_pdf": "assets/Resume-Master.pdf",
+  "page": {
+    "width": 595.5,
+    "height": 842.25
+  },
+  "colors": {
+    "text": [
+      0.17647058823529413,
+      0.23921568627450981,
+      0.30980392156862746
+    ],
+    "rule_gray": [
+      0.8980392156862745,
+      0.9058823529411765,
+      0.9215686274509803
+    ],
+    "rule_black": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "link_underline": [
+      0.17647058823529413,
+      0.23921568627450981,
+      0.30980392156862746
+    ]
+  },
+  "margins": {
+    "left": 36.8,
+    "right": 569.7,
+    "top_first": 48.0,
+    "top_continued": 47.6,
+    "bottom": 780.0
+  },
+  "lines": {
+    "thickness": 0.75,
+    "full_x0": 37.25,
+    "full_x1": 569.7,
+    "github_x0": 42.05
+  },
+  "spacing": {
+    "name_y": 48.0,
+    "contact_y": 66.1,
+    "header_rule_y": 98.68,
+    "first_section_y": 113.74,
+    "section_title_to_rule": 23.1,
+    "section_rule_to_content": 14.2,
+    "section_footer_gap": 13.3,
+    "section_footer_to_next": 16.0,
+    "body_line_height": 10.0,
+    "job_title_to_org": 14.0,
+    "org_to_bullets": 15.6,
+    "experience_after_block": 15.7,
+    "bullet_line_step": 11.2,
+    "bullet_after_wrap": 1.7,
+    "projects_heading_to_first": 15.3,
+    "project_title_to_tech": 18.5,
+    "tech_to_url": 11.6,
+    "url_to_bullets": 17.0,
+    "project_after_block": 15.7,
+    "skill_line": 15.8,
+    "degree_to_org": 12.0
+  },
+  "typography": {
+    "body_lineheight": 1.36,
+    "bullet_x": 36.8,
+    "bullet_text_x": 54.8,
+    "bullet_font": "arial",
+    "bullet_size": 11.0,
+    "subheading_x": 42.05,
+    "uc_org_primary": "University of Canterbury ",
+    "uc_org_location": "New Zealand ",
+    "uc_org_location_x": 501.63,
+    "uc_org_location_size": 8.25,
+    "url_underline_offset": 9.4
+  }
+}

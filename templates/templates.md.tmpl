@@ -1,0 +1,203 @@
+# Job Application Templates
+
+Reference for tailoring resumes and writing cover letters. Read alongside [profile.md](profile.md), [master-resume.md](master-resume.md), and [Resume-Master.pdf](Resume-Master.pdf).
+
+Applicant file prefix (from `config.json`): **{{file_prefix}}**
+
+---
+
+## Master Resume Style
+
+**Always follow this layout.** Tailored resumes must match the master PDF format — only content changes per role.
+
+Canonical reference: [Resume-Master.pdf](Resume-Master.pdf)
+
+### Header
+
+```
+{{full_name}}
+{{contact_line}}
+```
+
+- Name on line 1; contact details on line 2, pipe-separated
+- Include portfolio / GitHub URLs from config; do **not** add a separate location line
+- Plain text URLs — no markdown links, no bold
+
+### Section Order
+
+1. SUMMARY
+2. EXPERIENCE
+3. PROJECTS
+4. SKILLS
+5. EDUCATION
+
+### Section Headings
+
+- ALL CAPS: `## SUMMARY`, `## EXPERIENCE`, `## PROJECTS`, `## SKILLS`, `## EDUCATION`
+- No horizontal rules (`---`) between sections
+- No bold subheadings within sections
+
+### Summary
+
+- One prose paragraph (4–5 sentences)
+- Professional and confident yet humble
+- End with role intent aligned to the listing
+
+### Experience
+
+```
+Role Title
+Organisation City Country
+
+- [purpose + outcome bullet]
+- [bullet]
+```
+
+- Role title on its own line
+- Organisation on the next line
+- Blank line after organisation, before bullets
+- Dash bullets (`-`)
+- Blank line between each experience entry
+- Only include roles evidenced in `profile.md`
+
+### Resume bullet quality (purpose + outcome)
+
+Every experience and project bullet must state **why the work mattered** or **what changed**, not only what you did.
+
+| Element | Question |
+| -------- | -------- |
+| **Action** | What did you do? |
+| **Purpose** | What problem did it solve or why was it needed? |
+| **Outcome** | What improved for users, the team, or quality? |
+
+**Avoid activity-only bullets.** Check `profile.md` "Claims to Avoid" before writing.
+
+### Projects
+
+```
+Project Name — Description (Solo|Team of N)
+Tech, Stack, Comma, Separated
+github.com/you/repo-name
+
+- [bullet]
+- [bullet]
+```
+
+- Em dash (`—`) in title; optional team context in parentheses
+- Tech stack plain comma-separated
+- GitHub URL plain text (no `https://`, no markdown links)
+- 3–5 bullets; reorder by relevance to the listing
+
+### Skills
+
+Flat category lines — no bold labels, no bullet lists:
+
+```
+Languages: …
+Backend: …
+Frontend: …
+Databases: …
+Testing & Tools: …
+```
+
+Only list skills with evidence in `profile.md`.
+
+### Education
+
+```
+Degree Title
+Institution • Country • Year
+```
+
+### What Not to Do
+
+- No markdown links (`[text](url)`)
+- No bold/italic formatting in body content
+- No `---` horizontal rules
+- No separate location line in the header
+- No extra sections unless the user asks
+- Never invent experience
+
+---
+
+## Tailoring Checklist
+
+```
+- [ ] Read listing — required skills, nice-to-haves, company values, role level
+- [ ] Read profile.md, master-resume.md, and Resume-Master.pdf
+- [ ] Select 2–3 most relevant projects (reorder; do not invent)
+- [ ] Work auth: {{work_auth_note}}
+- [ ] Rewrite summary to mirror listing language (without keyword stuffing)
+- [ ] Adjust skills order to match listing priorities
+- [ ] Purpose/outcome pass on every bullet
+- [ ] Format pass — match Master Resume Style
+- [ ] Export PDFs: python3 scripts/export_application_pdfs.py {slug}
+- [ ] Write cover letter (if requested)
+- [ ] Spelling pass ({{spelling}})
+- [ ] Tone pass
+- [ ] Save using Output File Naming below
+```
+
+---
+
+## Cover Letter Template
+
+**Length:** 300–400 words  
+**Tone:** Professional and friendly. Confident about demonstrated skills; humble about growth.
+
+```markdown
+Dear [Hiring Manager / Hiring Team / name],
+
+[Paragraph 1 — Hook + role]
+I am writing to apply for the [Role Title] position at [Company]. …
+
+[Paragraph 2 — Relevant technical experience]
+…
+
+[Paragraph 3 — Team / soft skills + growth mindset]
+…
+
+[Paragraph 4 — Close]
+…
+
+Kind regards,
+{{full_name}}
+{{phone}}
+{{email}}
+```
+
+### Cover Letter Rules
+
+1. Use user-provided motivation when given
+2. Do not fabricate company knowledge
+3. Mirror listing language naturally
+4. One project deep-dive beats listing every project
+5. Avoid clichés ("passionate", "hit the ground running", "perfect fit")
+6. Spelling: {{spelling}}
+
+---
+
+## Output File Naming
+
+Save under `applications/{company}-{role-slug}/`:
+
+| Document | Filename |
+|----------|----------|
+| Resume | `{{file_prefix}}-Resume-{Company Name}.md` |
+| Cover letter | `{{file_prefix}}-CoverLetter-{Company Name}.md` |
+| Notes | `notes.md` |
+
+Use the company name as it appears in the listing.
+
+---
+
+## Updating the Workflow
+
+| File | What to change |
+|------|----------------|
+| `config.json` | Name, file prefix, search market, schedule |
+| `SKILL.md` | Workflow steps (re-run bootstrap after editing `.tmpl`) |
+| `profile.md` | Skills, projects, preferences |
+| `master-resume.md` | Base resume content |
+| `Resume-Master.pdf` | Layout reference (regenerated by bootstrap) |
+| `templates.md` | Style + cover letter rules |

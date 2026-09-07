@@ -1,0 +1,76 @@
+name: Merge Cursor automation PRs
+
+on:
+  push:
+    branches:
+      - cursor/**
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  deliver:
+    if: github.event_name == 'push' && github.actor == 'cursor[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the automation commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply automation changes directly onto main
+        env:
+          AUTOMATION_SHA: ${{ github.sha }}
+        run: |
+          git fetch origin main
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          BASE_SHA="$(git merge-base origin/main "$AUTOMATION_SHA")"
+          git checkout -B main origin/main
+
+          while IFS= read -r -d '' path; do
+            if git cat-file -e "$AUTOMATION_SHA:$path" 2>/dev/null; then
+              git checkout "$AUTOMATION_SHA" -- "$path"
+            else
+              git rm -f --ignore-unmatch -- "$path"
+            fi
+          done < <(git diff --name-only -z "$BASE_SHA" "$AUTOMATION_SHA")
+
+          if git diff --cached --quiet; then
+            echo "No changes remain to deliver."
+            exit 0
+          fi
+
+          git commit -m "Deliver Cursor automation changes"
+          git push origin HEAD:main
+
+  merge:
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.user.login == 'cursor[bot]' &&
+      startsWith(github.head_ref, 'cursor/') &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Mark draft ready for merge
+        if: github.event.pull_request.draft
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: gh pr ready "$PR_URL"
+
+      - name: Squash merge into main
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: gh pr merge "$PR_URL" --squash --delete-branch

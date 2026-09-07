@@ -1,0 +1,8 @@
+config.json
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+review-ui/review-state.json
+daily-runs/*-attempt-*.md
+daily-runs/*-NEEDS-APPROVAL.md

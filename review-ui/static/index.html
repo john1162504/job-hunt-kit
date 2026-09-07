@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Application Review</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <header class="sidebar-header">
+          <p class="eyebrow">Application review</p>
+          <h1>Applications</h1>
+          <p class="subtitle">Browse by day or review everything, then update statuses in bulk.</p>
+        </header>
+
+        <div class="mode-toggle" role="group" aria-label="Browse mode">
+          <button id="mode-day" class="mode-btn active" type="button" data-mode="day">By day</button>
+          <button id="mode-all" class="mode-btn" type="button" data-mode="all">All apps</button>
+        </div>
+
+        <div id="day-controls">
+          <label class="field-label" for="date-select">Run date</label>
+          <select id="date-select" class="select"></select>
+        </div>
+
+        <section id="run-summary" class="run-summary" hidden>
+          <div class="status-row">
+            <span id="run-status" class="badge"></span>
+            <span id="run-attempt" class="muted"></span>
+          </div>
+          <p id="run-headline" class="headline"></p>
+          <div id="run-counts" class="counts"></div>
+          <div id="run-notes" class="day-notes" hidden></div>
+          <div id="run-git" class="git-meta muted"></div>
+        </section>
+
+        <section class="bulk-bar">
+          <div class="bulk-row">
+            <label class="bulk-select-all">
+              <input id="select-all" type="checkbox" />
+              Select all
+            </label>
+            <span id="selected-count" class="muted">0 selected</span>
+          </div>
+          <label class="field-label" for="bulk-status">Bulk status</label>
+          <div class="bulk-actions">
+            <select id="bulk-status" class="select bulk-select">
+              <option value="">Choose status…</option>
+              <option value="to_apply">To apply</option>
+              <option value="applied">Applied</option>
+              <option value="needs_edit">Needs edit</option>
+              <option value="skipped">Skip</option>
+            </select>
+            <button id="bulk-apply" class="button" type="button">Apply</button>
+          </div>
+        </section>
+
+        <section class="sidebar-section">
+          <h2 id="role-list-title">Active roles</h2>
+          <ul id="role-list" class="role-list"></ul>
+        </section>
+
+        <section id="archive-section" class="sidebar-section" hidden>
+          <details id="archive-details">
+            <summary id="archive-summary">Archive</summary>
+            <ul id="archive-list" class="role-list archive-list"></ul>
+          </details>
+        </section>
+
+        <section id="skipped-section" class="sidebar-section" hidden>
+          <details id="skipped-details" open>
+            <summary>Skipped & other notes</summary>
+            <div id="skipped-content" class="skipped-content"></div>
+          </details>
+        </section>
+      </aside>
+
+      <div
+        id="sidebar-resizer"
+        class="sidebar-resizer"
+        role="separator"
+        aria-orientation="vertical"
+        aria-label="Resize sidebar"
+        aria-valuemin="260"
+        aria-valuemax="560"
+        aria-valuenow="360"
+        tabindex="0"
+      ></div>
+
+      <main class="main">
+        <div id="empty-state" class="empty-state">
+          <h2>Select a role to review</h2>
+          <p>Choose an application from the sidebar, or click a count widget to open that report.</p>
+        </div>
+
+        <article id="report-panel" class="detail-panel report-panel" hidden>
+          <header class="detail-header">
+            <div>
+              <p class="eyebrow">Day report</p>
+              <h2 id="report-title"></h2>
+              <p id="report-subtitle" class="muted"></p>
+            </div>
+            <div class="detail-actions">
+              <button id="close-report" class="button ghost" type="button">Close</button>
+            </div>
+          </header>
+          <div id="report-content" class="markdown-body report-content"></div>
+        </article>
+
+        <article id="detail-panel" class="detail-panel" hidden>
+          <header class="detail-header">
+            <div>
+              <p id="detail-company" class="eyebrow"></p>
+              <h2 id="detail-title"></h2>
+              <p id="detail-location" class="muted"></p>
+              <p id="detail-date" class="muted"></p>
+              <p id="detail-url" class="detail-url" hidden></p>
+            </div>
+            <div class="detail-actions">
+              <a id="listing-link" class="button secondary" href="#" target="_blank" rel="noopener">Open listing</a>
+              <button id="prev-role" class="button ghost" type="button">Previous</button>
+              <button id="next-role" class="button ghost" type="button">Next</button>
+            </div>
+          </header>
+
+          <section class="review-bar">
+            <span class="field-label">Review status</span>
+            <div class="review-buttons">
+              <button class="review-btn" data-status="to_apply" type="button">To apply</button>
+              <button class="review-btn" data-status="applied" type="button">Applied</button>
+              <button class="review-btn" data-status="needs_edit" type="button">Needs edit</button>
+              <button class="review-btn" data-status="skipped" type="button">Skip</button>
+            </div>
+            <input id="review-note" class="review-note" type="text" placeholder="Optional note (e.g. wait for visa wording)" />
+          </section>
+
+          <section class="match-card">
+            <h3>Why it matched</h3>
+            <p id="detail-why"></p>
+          </section>
+
+          <div class="tabs">
+            <button class="tab active" data-tab="docs" type="button">Resume & cover</button>
+            <button class="tab" data-tab="notes" type="button">Notes</button>
+            <button class="tab" data-tab="pdfs" type="button">PDFs</button>
+          </div>
+
+          <section id="tab-docs" class="tab-panel active">
+            <div class="docs-grid">
+              <div>
+                <div class="docs-heading">
+                  <h3>Resume</h3>
+                  <a id="resume-doc-pdf" class="button ghost small" href="#" target="_blank" rel="noopener">PDF</a>
+                </div>
+                <div id="resume-content" class="markdown-body doc-scroll"></div>
+              </div>
+              <div>
+                <div class="docs-heading">
+                  <h3>Cover letter</h3>
+                  <a id="cover-doc-pdf" class="button ghost small" href="#" target="_blank" rel="noopener">PDF</a>
+                </div>
+                <div id="cover-content" class="markdown-body doc-scroll"></div>
+              </div>
+            </div>
+          </section>
+          <section id="tab-notes" class="tab-panel">
+            <div id="notes-content" class="markdown-body"></div>
+          </section>
+          <section id="tab-pdfs" class="tab-panel pdf-panel">
+            <div class="pdf-grid">
+              <div>
+                <div class="docs-heading">
+                  <h3>Resume PDF</h3>
+                  <a id="resume-pdf-link" class="button ghost small" href="#" target="_blank" rel="noopener">Open</a>
+                </div>
+                <iframe id="resume-pdf-frame" title="Resume PDF preview" class="pdf-frame"></iframe>
+              </div>
+              <div>
+                <div class="docs-heading">
+                  <h3>Cover letter PDF</h3>
+                  <a id="cover-pdf-link" class="button ghost small" href="#" target="_blank" rel="noopener">Open</a>
+                </div>
+                <iframe id="cover-pdf-frame" title="Cover letter PDF preview" class="pdf-frame"></iframe>
+              </div>
+            </div>
+          </section>
+        </article>
+      </main>
+    </div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
